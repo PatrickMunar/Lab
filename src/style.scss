@@ -1,0 +1,68 @@
+@font-face {
+  font-family: Main;
+  src: url("./fonts/NeutralFace-Bold.otf");
+}
+
+* {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f3f3f3;
+  font-family: Main;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+// Html
+.htmlDiv {
+  width: 100vw;
+  height: 100svh;
+  position: fixed;
+  transform: translateX(-50vw) translateY(-50svh);
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.descriptionFollowerDiv {
+  position: absolute;
+  text-align: center;
+  background-color: #f3f3f3c0;
+  padding: 5px 10px;
+  border: 1px solid black;
+}
+
+.orientationWarning {
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.warningText0 {
+  position: absolute;
+  font-size: 10vw;
+  transform: rotateZ(90deg);
+  padding-top: 15vw;
+}
+
+.warningText1 {
+  position: absolute;
+  font-size: 10vw;
+  transform: rotateZ(-90deg);
+  padding-top: 15vw;
+}
