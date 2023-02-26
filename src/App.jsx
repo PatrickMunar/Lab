@@ -6,7 +6,7 @@ import {
   useFBO,
   useTexture,
 } from "@react-three/drei"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Canvas, useFrame, useLoader } from "@react-three/fiber"
 import { useEffect, useMemo, useRef } from "react"
 import * as THREE from "three"
 import "./style.scss"
@@ -600,6 +600,16 @@ const Experience = () => {
   }
 
   const enterMail = (e) => {
+    for (let i = 0; i < bubbles.length; i++) {
+      gsap.to(bubbles[i].current.material.uniforms.uChromaticAberration, {
+        duration: 0.25,
+        value: 0.4,
+      })
+      gsap.to(bubbles[i].current.material.uniforms.uRefractPower, {
+        duration: 0.25,
+        value: 0.4,
+      })
+    }
     gsap.to(e.object.position, { duration: 0.25, y: -10.75 + 0.1 })
     for (let i = 0; i < bubbles.length; i++) {
       gsap.to(bubbles[i].current.material.uniforms.uRipple, {
@@ -633,6 +643,16 @@ const Experience = () => {
   }
 
   const leaveMail = (e) => {
+    for (let i = 0; i < bubbles.length; i++) {
+      gsap.to(bubbles[i].current.material.uniforms.uChromaticAberration, {
+        duration: 0.25,
+        value: 0.22,
+      })
+      gsap.to(bubbles[i].current.material.uniforms.uRefractPower, {
+        duration: 0.25,
+        value: 0.22,
+      })
+    }
     gsap.to(e.object.position, { duration: 0.25, y: -10.75 })
     for (let i = 0; i < bubbles.length; i++) {
       gsap.to(bubbles[i].current.material.uniforms.uRipple, {
@@ -676,21 +696,21 @@ const Experience = () => {
       <color attach="background" args={["#f3f3f3"]} />
       <directionalLight position={[20, 10, 10]} />
       <ambientLight intensity={1.0} />
-      {/* <EffectComposer>
-        <DotScreen
+      {/* <EffectComposer> */}
+      {/* <DotScreen
           blendFunction={BlendFunction.NORMAL} // blend mode
           angle={Math.PI / 4} // angle of the dot pattern
           scale={1} // scale of the dot pattern
-        />
-        <Noise
+        /> */}
+      {/* <Noise
           premultiply // enables or disables noise premultiplication
           blendFunction={BlendFunction.MULTIPLY} // blend mode
-        />
-        <Scanline
+        /> */}
+      {/* <Scanline
           blendFunction={BlendFunction.OVERLAY} // blend mode
           density={1.25} // scanline density
-        />
-      </EffectComposer> */}
+        /> */}
+      {/* </EffectComposer> */}
 
       {/* Camera Group */}
       <group ref={cameraGroup}>
