@@ -23,7 +23,6 @@ import { Perf } from "r3f-perf"
 
 const Experience = () => {
   // Refraction Code learned and inspired from Maxime Heckel's blog
-  // This reference gives us direct access to our mesh
   const description = useRef()
   const warning = useRef()
 
@@ -119,11 +118,15 @@ const Experience = () => {
 
   const resetSizes = () => {
     if (window.innerHeight > window.innerWidth) {
-      gsap.to(warning.current, { duration: 0, opacity: 1 })
+      if (warning.current) {
+        gsap.to(warning.current, { duration: 0, opacity: 1 })
+      }
       sizes.width = window.innerHeight
       sizes.height = window.innerWidth
     } else {
-      gsap.to(warning.current, { duration: 0, opacity: 0 })
+      if (warning.current) {
+        gsap.to(warning.current, { duration: 0, opacity: 0 })
+      }
       sizes.width = window.innerWidth
       sizes.height = window.innerHeight
     }
@@ -152,7 +155,7 @@ const Experience = () => {
         value: 0.22,
       },
       uChromaticAberration: {
-        value: 0.15,
+        value: 0.22,
       },
       uSaturation: { value: 1 },
       uShininess: { value: 30.0 },
@@ -179,6 +182,15 @@ const Experience = () => {
       uGreyIntensity: {
         value: 1,
       },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 1,
+      },
     }),
     []
   )
@@ -189,6 +201,15 @@ const Experience = () => {
         value: portTexture1,
       },
       uGreyIntensity: {
+        value: 1,
+      },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
         value: 1,
       },
     }),
@@ -203,6 +224,15 @@ const Experience = () => {
       uGreyIntensity: {
         value: 1,
       },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 1,
+      },
     }),
     []
   )
@@ -213,6 +243,15 @@ const Experience = () => {
         value: portTexture3,
       },
       uGreyIntensity: {
+        value: 1,
+      },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
         value: 1,
       },
     }),
@@ -227,6 +266,15 @@ const Experience = () => {
       uGreyIntensity: {
         value: 1,
       },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 1,
+      },
     }),
     []
   )
@@ -237,6 +285,15 @@ const Experience = () => {
         value: portTexture5,
       },
       uGreyIntensity: {
+        value: 1,
+      },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
         value: 1,
       },
     }),
@@ -251,6 +308,15 @@ const Experience = () => {
       uGreyIntensity: {
         value: 1,
       },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 0,
+      },
     }),
     []
   )
@@ -262,6 +328,15 @@ const Experience = () => {
       },
       uGreyIntensity: {
         value: 1,
+      },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 0,
       },
     }),
     []
@@ -275,6 +350,15 @@ const Experience = () => {
       uGreyIntensity: {
         value: 1,
       },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 0,
+      },
     }),
     []
   )
@@ -286,6 +370,15 @@ const Experience = () => {
       },
       uGreyIntensity: {
         value: 1,
+      },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 0,
       },
     }),
     []
@@ -299,6 +392,15 @@ const Experience = () => {
       uGreyIntensity: {
         value: 1,
       },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 0,
+      },
     }),
     []
   )
@@ -311,9 +413,33 @@ const Experience = () => {
       uGreyIntensity: {
         value: 1,
       },
+      uTime: {
+        value: 0,
+      },
+      uAmp: {
+        value: 0,
+      },
+      uLeft: {
+        value: 0,
+      },
     }),
     []
   )
+
+  const planeUniformArray = [
+    planeUniform0,
+    planeUniform1,
+    planeUniform2,
+    planeUniform3,
+    planeUniform4,
+    planeUniform5,
+    planeUniform6,
+    planeUniform7,
+    planeUniform8,
+    planeUniform9,
+    planeUniform10,
+    planeUniform11,
+  ]
 
   // Resize
   window.addEventListener("resize", () => {
@@ -374,6 +500,7 @@ const Experience = () => {
     portfolio.current.rotation.y = -state.pointer.x * 0.0004
     portfolio.current.rotation.x = state.pointer.y * 0.0004
 
+    // Bubble Up animation and randomization
     for (let i = 0; i < bubbles.length; i++) {
       if (i != 0) {
         if (bubbles[i].current.position.y < 12) {
@@ -395,46 +522,70 @@ const Experience = () => {
       }
     }
 
-    gsap.to(description.current, {
-      duration: 0,
-      x:
-        (state.pointer.x *
-          (sizes.width - description.current.clientWidth * 2)) /
-        2,
-      y: -(state.pointer.y * sizes.height) / 2,
-    })
+    // Description follows cursor
+    if (description.current) {
+      gsap.to(description.current, {
+        duration: 0,
+        x:
+          (state.pointer.x *
+            (sizes.width - description.current.clientWidth * 2)) /
+          2,
+        y: -(state.pointer.y * sizes.height) / 2,
+      })
+    }
+
+    // Update uTime for planeVertexShader
+    for (let i = 0; i < portfolio.current.children.length; i++) {
+      portfolio.current.children[i].material.uniforms.uTime.value = time
+    }
   })
 
   // Events
-  gsap.to(description.current, { duration: 0, opacity: 0 })
+  if (description.current) {
+    gsap.to(description.current, { duration: 0, opacity: 0 })
+  }
 
   const enterPortfolio = (e) => {
+    const index = parseInt(e.object.name)
+    if (index < 6) {
+      gsap.to(e.object.position, { duration: 0.5, x: -45 + 5 })
+    } else {
+      gsap.to(e.object.position, { duration: 0.5, x: 45 - 5 })
+    }
     gsap.to(e.object.material.uniforms.uGreyIntensity, {
       duration: 0.5,
       value: 0,
     })
-    if (e.object.position.x < 0) {
-      gsap.to(e.object.position, { duration: 0.5, x: -45 + 2 })
-    } else {
-      gsap.to(e.object.position, { duration: 0.5, x: 45 - 2 })
-    }
+    gsap.to(e.object.material.uniforms.uAmp, {
+      duration: 0.5,
+      value: 0.2,
+    })
     document.body.style.cursor = "pointer"
-    description.current.innerText = descriptionArray[parseInt(e.object.name)]
-    gsap.to(description.current, { duration: 0.1, opacity: 1 })
+    if (description.current) {
+      description.current.innerText = descriptionArray[index]
+      gsap.to(description.current, { duration: 0.1, opacity: 1 })
+    }
   }
 
   const leavePortfolio = (e) => {
-    gsap.to(e.object.material.uniforms.uGreyIntensity, {
-      duration: 0.5,
-      value: 1,
-    })
-    if (e.object.position.x < 0) {
+    const index = parseInt(e.object.name)
+    if (index < 6) {
       gsap.to(e.object.position, { duration: 0.5, x: -45 })
     } else {
       gsap.to(e.object.position, { duration: 0.5, x: 45 })
     }
+    gsap.to(e.object.material.uniforms.uGreyIntensity, {
+      duration: 0.5,
+      value: 1,
+    })
+    gsap.to(e.object.material.uniforms.uAmp, {
+      duration: 0.5,
+      value: 0,
+    })
     document.body.style.cursor = "default"
-    gsap.to(description.current, { duration: 0.1, opacity: 0 })
+    if (description.current) {
+      gsap.to(description.current, { duration: 0.1, opacity: 0 })
+    }
   }
 
   const clickPortfolio = (e) => {
@@ -451,6 +602,27 @@ const Experience = () => {
     }
     gsap.to(bubbleUpSpeed, { duration: 0.25, value: 0 })
     document.body.style.cursor = "pointer"
+    for (let i = 0; i < portfolio.current.children.length; i++) {
+      if (i < 6) {
+        gsap.to(portfolio.current.children[i].position, {
+          duration: 0.5,
+          x: -45 + 5,
+        })
+      } else {
+        gsap.to(portfolio.current.children[i].position, {
+          duration: 0.5,
+          x: 45 - 5,
+        })
+      }
+      gsap.to(portfolio.current.children[i].material.uniforms.uGreyIntensity, {
+        duration: 0.5,
+        value: 0,
+      })
+      gsap.to(portfolio.current.children[i].material.uniforms.uAmp, {
+        duration: 0.5,
+        value: 0.2,
+      })
+    }
   }
 
   const leaveMail = (e) => {
@@ -463,6 +635,27 @@ const Experience = () => {
     }
     gsap.to(bubbleUpSpeed, { duration: 0.25, value: 1.25 })
     document.body.style.cursor = "default"
+    for (let i = 0; i < portfolio.current.children.length; i++) {
+      if (i < 6) {
+        gsap.to(portfolio.current.children[i].position, {
+          duration: 0.5,
+          x: -45,
+        })
+      } else {
+        gsap.to(portfolio.current.children[i].position, {
+          duration: 0.5,
+          x: 45,
+        })
+      }
+      gsap.to(portfolio.current.children[i].material.uniforms.uGreyIntensity, {
+        duration: 0.5,
+        value: 1,
+      })
+      gsap.to(portfolio.current.children[i].material.uniforms.uAmp, {
+        duration: 0.5,
+        value: 0,
+      })
+    }
   }
 
   const clickMail = (e) => {
@@ -474,13 +667,13 @@ const Experience = () => {
       {/* <Perf /> */}
       {/* <OrbitControls /> */}
       <color attach="background" args={["#f3f3f3"]} />
-      <EffectComposer>
+      {/* <EffectComposer>
         <DotScreen
           blendFunction={BlendFunction.NORMAL} // blend mode
           angle={Math.PI / 4} // angle of the dot pattern
           scale={1} // scale of the dot pattern
         />
-      </EffectComposer>
+      </EffectComposer> */}
 
       {/* Camera Group */}
       <group ref={cameraGroup}>
@@ -526,7 +719,7 @@ const Experience = () => {
             position={[0, -7, 0]}
             scale={2}
           >
-            HTML | CSS | SASS | JS
+            HTML | CSS | SASS | GSAP | JS
           </Text>
           <Text
             font="./fonts/NeutralFace.otf"
@@ -547,19 +740,20 @@ const Experience = () => {
           >
             rptmunar@gmail.com
           </Text>
-          <Html>
-            <div className="htmlDiv">
-              <div ref={description} className="descriptionFollowerDiv">
-                Marble Game
-              </div>
-
-              <div ref={warning} className="orientationWarning">
-                <div className="warningText0">LANDSCAPE</div>
-                <div className="warningText1">LANDSCAPE</div>
-              </div>
-            </div>
-          </Html>
         </group>
+
+        <Html>
+          <div className="htmlDiv">
+            <div ref={description} className="descriptionFollowerDiv">
+              Marble Game
+            </div>
+
+            <div ref={warning} className="orientationWarning">
+              <div className="warningText0">LANDSCAPE</div>
+              <div className="warningText1">LANDSCAPE</div>
+            </div>
+          </div>
+        </Html>
 
         {/* Main Bubble */}
         <group>
@@ -623,12 +817,15 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
             uniforms={planeUniform0}
             transparent
+            side="doubleside"
           />
         </mesh>
         <mesh
@@ -643,7 +840,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -663,7 +862,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -683,7 +884,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -703,7 +906,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -723,7 +928,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -744,7 +951,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -764,7 +973,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -784,7 +995,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -804,7 +1017,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -824,7 +1039,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
@@ -844,7 +1061,9 @@ const Experience = () => {
           onPointerLeave={leavePortfolio}
           onClick={clickPortfolio}
         >
-          <planeGeometry args={[(8 * 1920) / 1080, 8]} />
+          <planeGeometry
+            args={[(8 * 1920) / 1080, 8, ((8 * 1920) / 1080) * 10, 8 * 10]}
+          />
           <shaderMaterial
             vertexShader={planeVertexShader}
             fragmentShader={planeFragmentShader}
