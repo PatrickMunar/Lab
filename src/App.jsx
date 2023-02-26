@@ -17,7 +17,14 @@ import bubbleFragmentShader from "./shaders/bubbleFragmentShader"
 import planeVertexShader from "./shaders/planeVertexShader"
 import planeFragmentShader from "./shaders/planeFragmentShader"
 
-import { DotScreen, EffectComposer } from "@react-three/postprocessing"
+import {
+  DotScreen,
+  EffectComposer,
+  GodRays,
+  Noise,
+  Pixelation,
+  Scanline,
+} from "@react-three/postprocessing"
 import { BlendFunction } from "postprocessing"
 import { Perf } from "r3f-perf"
 
@@ -667,11 +674,21 @@ const Experience = () => {
       {/* <Perf /> */}
       {/* <OrbitControls /> */}
       <color attach="background" args={["#f3f3f3"]} />
+      <directionalLight position={[20, 10, 10]} />
+      <ambientLight intensity={1.0} />
       {/* <EffectComposer>
         <DotScreen
           blendFunction={BlendFunction.NORMAL} // blend mode
           angle={Math.PI / 4} // angle of the dot pattern
           scale={1} // scale of the dot pattern
+        />
+        <Noise
+          premultiply // enables or disables noise premultiplication
+          blendFunction={BlendFunction.MULTIPLY} // blend mode
+        />
+        <Scanline
+          blendFunction={BlendFunction.OVERLAY} // blend mode
+          density={1.25} // scanline density
         />
       </EffectComposer> */}
 
@@ -1084,8 +1101,6 @@ const Scene = () => {
         camera={{ position: [0, 0, 10] }}
         dpr={[1, 2]}
       >
-        <directionalLight position={[20, 10, 10]} />
-        <ambientLight intensity={1.0} />
         <Experience />
       </Canvas>
     </>
