@@ -20,12 +20,14 @@ uniform sampler2D uTexture;
 varying vec3 worldNormal;
 varying vec3 eyeVector;
 
+// Saturation Intensity
 vec3 sat(vec3 rgb, float adjustment) {
   const vec3 W = vec3(0.2125, 0.7154, 0.0721);
   vec3 intensity = vec3(dot(rgb, W));
   return mix(intensity, rgb, adjustment);
 }
 
+// Fresnel Application
 float fresnel(vec3 eyeVector, vec3 worldNormal, float power) {
   float fresnelFactor = abs(dot(eyeVector, worldNormal));
   float inversefresnelFactor = 1.0 - fresnelFactor;
@@ -33,6 +35,7 @@ float fresnel(vec3 eyeVector, vec3 worldNormal, float power) {
   return pow(inversefresnelFactor, power);
 }
 
+// Adding Light Source
 float specular(vec3 light, float shininess, float diffuseness) {
   vec3 normal = worldNormal;
   vec3 lightVector = normalize(-light);

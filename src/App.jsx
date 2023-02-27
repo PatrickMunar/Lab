@@ -125,15 +125,11 @@ const Experience = () => {
 
   const resetSizes = () => {
     if (window.innerHeight > window.innerWidth) {
-      if (warning.current) {
-        gsap.to(warning.current, { duration: 0, opacity: 1 })
-      }
+      gsap.to(warning.current, { duration: 0, opacity: 1 })
       sizes.width = window.innerHeight
       sizes.height = window.innerWidth
     } else {
-      if (warning.current) {
-        gsap.to(warning.current, { duration: 0, opacity: 0 })
-      }
+      gsap.to(warning.current, { duration: 0, opacity: 0 })
       sizes.width = window.innerWidth
       sizes.height = window.innerHeight
     }
