@@ -1,5 +1,5 @@
 @font-face {
-  font-family: Main;
+  font-family: NeutralFaceBold;
   src: url("./fonts/NeutralFace-Bold.otf");
 }
 
@@ -16,7 +16,7 @@ body,
   width: 100%;
   height: 100%;
   background: #f3f3f3;
-  font-family: Main;
+  font-family: NeutralFaceBold;
   overflow-x: hidden;
   margin: 0;
 }
@@ -32,16 +32,16 @@ body,
   justify-content: center;
   align-items: center;
   pointer-events: none;
-  font-family: Main;
+  font-family: NeutralFaceBold;
 }
 
 .descriptionFollowerDiv {
+  font-family: NeutralFaceBold;
   position: absolute;
   text-align: center;
   background-color: #f3f3f3c0;
   padding: 5px 10px;
   border: 1px solid black;
-  font-family: Main;
 }
 
 .orientationWarning {
@@ -60,7 +60,7 @@ body,
   font-size: 10vw;
   transform: rotateZ(90deg);
   padding-top: 15vw;
-  font-family: Main;
+  font-family: NeutralFaceBold;
 }
 
 .warningText1 {
@@ -68,5 +68,5 @@ body,
   font-size: 10vw;
   transform: rotateZ(-90deg);
   padding-top: 15vw;
-  font-family: Main;
+  font-family: NeutralFaceBold;
 }
