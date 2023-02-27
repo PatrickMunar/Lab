@@ -448,6 +448,8 @@ const Experience = () => {
   window.addEventListener("resize", () => {
     resetSizes()
 
+    isWidthChecked = false
+
     for (let i = 0; i < bubbles.length; i++) {
       if (bubbles[i].current) {
         bubbles[i].current.material.uniforms.winResolution.value =
@@ -462,7 +464,13 @@ const Experience = () => {
   let bubbleUpSpeed = {
     value: 1.25,
   }
+  let isWidthChecked = false
   useFrame((state, delta) => {
+    if (window.innerWidth > window.innerHeight && isWidthChecked == false) {
+      isWidthChecked = true
+      gsap.to(warning.current, { duration: 0, opacity: 0 })
+    }
+
     const time = state.clock.elapsedTime
     for (let i = 0; i < bubbles.length; i++) {
       bubbles[i].current.material.uniforms.uTime.value = time
