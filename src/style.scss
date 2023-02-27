@@ -32,6 +32,7 @@ body,
   justify-content: center;
   align-items: center;
   pointer-events: none;
+  font-family: Main;
 }
 
 .descriptionFollowerDiv {
@@ -40,6 +41,7 @@ body,
   background-color: #f3f3f3c0;
   padding: 5px 10px;
   border: 1px solid black;
+  font-family: Main;
 }
 
 .orientationWarning {
@@ -58,6 +60,7 @@ body,
   font-size: 10vw;
   transform: rotateZ(90deg);
   padding-top: 15vw;
+  font-family: Main;
 }
 
 .warningText1 {
@@ -65,4 +68,5 @@ body,
   font-size: 10vw;
   transform: rotateZ(-90deg);
   padding-top: 15vw;
+  font-family: Main;
 }
