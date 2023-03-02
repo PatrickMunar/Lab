@@ -4,6 +4,7 @@ import {
   OrbitControls,
   Text,
   useFBO,
+  useGLTF,
   useTexture,
 } from "@react-three/drei"
 import { Canvas, useFrame, useLoader } from "@react-three/fiber"
@@ -444,6 +445,23 @@ const Experience = () => {
     planeUniform11,
   ]
 
+  // Load GLB
+  const logo = useGLTF("./glb/MainLogo.glb")
+
+  logo.scene.traverse((e) => {
+    if (e.isMesh) {
+      // e.material = new THREE.ShaderMaterial({
+      //   vertexShader: bubbleVertexShader,
+      //   fragmentShader: bubbleFragmentShader,
+      //   uniforms: uniforms,
+      // })
+      e.material = new THREE.MeshStandardMaterial({
+        // color: new THREE.Color(0x505050),
+        color: new THREE.Color(0xa0a0a0),
+      })
+    }
+  })
+
   // Resize
   window.addEventListener("resize", () => {
     resetSizes()
@@ -719,6 +737,15 @@ const Experience = () => {
       {/* Camera Group */}
       <group ref={cameraGroup}>
         <group ref={backgroundGroup} position={[0, 0, -5]}>
+          <Float>
+            <primitive
+              object={logo.scene}
+              // position={[-20, 8, -10]}
+              position={[30, 8, -30]}
+              scale={1}
+            />
+          </Float>
+
           <Text
             font="./fonts/NeutralFace.otf"
             color="#000000"
