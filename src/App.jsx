@@ -34,6 +34,7 @@ const Experience = () => {
   const description = useRef()
   const warning = useRef()
 
+  // Initial Orientation Check
   useEffect(() => {
     const checkOrientation = () => {
       if (window.innerWidth < window.innerHeight) {
@@ -44,6 +45,7 @@ const Experience = () => {
     checkOrientation()
   }, [])
 
+  // Intial refs
   const cameraGroup = useRef()
   const portfolio = useRef()
   const backgroundGroup = useRef()
@@ -68,6 +70,7 @@ const Experience = () => {
   const port10 = useRef()
   const port11 = useRef()
 
+  // Port Textures
   const portTexture0 = useTexture("./images/0.png")
   const portTexture1 = useTexture("./images/1.png")
   const portTexture2 = useTexture("./images/2.png")
@@ -83,6 +86,7 @@ const Experience = () => {
   const portTexture11 = useTexture("./images/11.png")
 
   /* Contents: bop, marble, claw, bznz, portfoliov2, gabito, ldr, noisegen, shader1, shader2, shader3, flagle */
+  // Port Links
   const linkArray = [
     "https://marblegame.patrickmunar.com/",
     "https://bznzcard.patrickmunar.com/",
@@ -99,6 +103,7 @@ const Experience = () => {
     "https://flagle.felren.xyz/",
   ]
 
+  // Port Descriptions
   const descriptionArray = [
     "Marble Game",
     "BZNZCard",
@@ -115,10 +120,11 @@ const Experience = () => {
     "Flagle",
   ]
 
-  // This is our main render target where we'll render and store the scene as a texture
+  // Render Targets
   const mainRenderTarget = useFBO()
   const backRenderTarget = useFBO()
 
+  // Sizes
   const sizes = {
     width: 0,
     height: 0,
@@ -138,6 +144,7 @@ const Experience = () => {
 
   resetSizes()
 
+  // Uniforms
   const uniforms = useMemo(
     () => ({
       uRipple: {
@@ -430,33 +437,12 @@ const Experience = () => {
     []
   )
 
-  const planeUniformArray = [
-    planeUniform0,
-    planeUniform1,
-    planeUniform2,
-    planeUniform3,
-    planeUniform4,
-    planeUniform5,
-    planeUniform6,
-    planeUniform7,
-    planeUniform8,
-    planeUniform9,
-    planeUniform10,
-    planeUniform11,
-  ]
-
   // Load GLB
   const logo = useGLTF("./glb/MainLogo.glb")
 
   logo.scene.traverse((e) => {
     if (e.isMesh) {
-      // e.material = new THREE.ShaderMaterial({
-      //   vertexShader: bubbleVertexShader,
-      //   fragmentShader: bubbleFragmentShader,
-      //   uniforms: uniforms,
-      // })
       e.material = new THREE.MeshStandardMaterial({
-        // color: new THREE.Color(0x505050),
         color: new THREE.Color(0xa0a0a0),
       })
     }
@@ -478,12 +464,13 @@ const Experience = () => {
     }
   })
 
-  // Tick
+  // Tick (useFrame)
   let bubbleUpSpeed = {
     value: 1.25,
   }
   let isWidthChecked = false
   useFrame((state, delta) => {
+    // Check width once
     if (window.innerWidth > window.innerHeight && isWidthChecked == false) {
       isWidthChecked = true
       gsap.to(warning.current, { duration: 0, opacity: 0 })
@@ -494,8 +481,10 @@ const Experience = () => {
       bubbles[i].current.material.uniforms.uTime.value = time
     }
 
+    // Set Camera Position
     state.camera.position.z = (10 * (1920 / 929)) / (sizes.width / sizes.height)
 
+    // Refraction Render Target Changes
     const { gl, scene, camera } = state
     for (let i = 0; i < bubbles.length; i++) {
       bubbles[i].current.visible = false
@@ -715,9 +704,7 @@ const Experience = () => {
     <>
       {/* <Perf /> */}
       {/* <OrbitControls /> */}
-      <color attach="background" args={["#f3f3f3"]} />
-      <directionalLight position={[20, 10, 10]} />
-      <ambientLight intensity={1.0} />
+
       {/* <EffectComposer> */}
       {/* <DotScreen
           blendFunction={BlendFunction.NORMAL} // blend mode
@@ -733,6 +720,11 @@ const Experience = () => {
           density={1.25} // scanline density
         /> */}
       {/* </EffectComposer> */}
+
+      {/* Scene */}
+      <color attach="background" args={["#f3f3f3"]} />
+      <directionalLight position={[20, 10, 10]} />
+      <ambientLight intensity={1.0} />
 
       {/* Camera Group */}
       <group ref={cameraGroup}>
@@ -834,6 +826,8 @@ const Experience = () => {
             />
           </mesh>
         </group>
+
+        {/* Side Bubble 0 */}
         <group ref={sideMesh0} position={[0, 0, 0]}>
           <mesh
             ref={mesh1}
@@ -848,6 +842,8 @@ const Experience = () => {
             />
           </mesh>
         </group>
+
+        {/* Side Bubble 1 */}
         <group ref={sideMesh1} position={[0, 0, 0]}>
           <mesh
             ref={mesh2}
