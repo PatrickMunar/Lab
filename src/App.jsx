@@ -37,8 +37,8 @@ const Experience = () => {
   // Initial Orientation Check
   useEffect(() => {
     const checkOrientation = () => {
-      if (window.innerWidth < window.innerHeight) {
-        gsap.to(warning.current, { duration: 0, opacity: 0 })
+      if (window.innerWidth > window.innerHeight) {
+        gsap.to(warning.current, { duration: 0, opacity: 1 })
       }
     }
 
