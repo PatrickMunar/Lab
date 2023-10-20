@@ -39,10 +39,8 @@ const Experience = () => {
     const checkOrientation = () => {
       if (window.innerWidth > window.innerHeight) {
         gsap.to(warning.current, { duration: 0, opacity: 1 })
-        console.log('go')
       }
 
-      console.log('test')
     }
 
     checkOrientation()
